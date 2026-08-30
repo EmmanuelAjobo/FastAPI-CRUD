@@ -26,7 +26,7 @@ app.add_middleware(
 
 @app.get("/")
 async def home():
-    return {"message": "you are home"}
+    return {"message": "Home link"}
 
 app.include_router(user.router)
 app.include_router(post.router)
