@@ -19,18 +19,17 @@ import os
 config = context.config
 # config.set_main_option("sqlalchemy.url", settings.SQLMODEL_DATABASE_URL)
 db_url = os.getenv("DATABASE_URL")
-
-if db_url and db_url.startswith("postgres://"):
-    db_url = db_url.replace("postgres://", "postgresql://", 1)
-
-
 if not db_url:
     db_url = str(settings.SQLMODEL_DATABASE_URL)
-    if db_url.startswith("postgres://"):
-        db_url = db_url.replace("postgres://", "postgresql://", 1)
 
+# 2. Convert standard postgres:// to postgresql+asyncpg:// for async migrations
+if db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql+asyncpg://", 1)
+elif db_url.startswith("postgresql://") and not db_url.startswith("postgresql+asyncpg://"):
+    db_url = db_url.replace("postgresql://", "postgresql+asyncpg://", 1)
 
 config.set_main_option("sqlalchemy.url", db_url)
+
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
