@@ -8,6 +8,8 @@ dependencies = [
     "python-dotenv>=1.2.2",
     "sqlalchemy>=2.0.52",
     "sqlmodel>=0.0.39",
+    "alembic>=1.19.1",
+    "asyncpg>=0.29.0"
 ]
 
 [dependency-groups]
